@@ -12,6 +12,14 @@ def dct(arr):
     dcta2 = fftpack.dct(arr,norm='ortho')
     return dcta2
 
+def zeros(m,n):
+    if(n==1):
+        arr = np.ndarray((m,),float)
+    else:
+        arr = np.ndarray((m,n),float)
+    arr.fill(0)
+    return arr
+
 def mean_interpolation(x,y):
     y_interp = scipy.interpolate.interp1d(x, y)
     return y_interp
@@ -30,9 +38,9 @@ def mean_fit(arr):
     new_arr.append(y[xlen-1])    
     return new_arr  
 
-def interpolation_with_zeros(arr):
+def interpolation_with_zeros(arr,n):
     xlen = len(arr)
-    xtralen = coef_size - xlen
+    xtralen = n - xlen
     for x in range(xtralen):
         arr.append(0)
     return arr
@@ -69,7 +77,7 @@ if __name__ == "__main__":
     data_path = '/afs/inf.ed.ac.uk/group/cstr/projects/phd/s1432486/work/Feature_extraction/Output/'
 
     HTK_labels = data_path+'HTK_labels_AT/';
-    f0_path    = data_path+'f0_AT/';
+    f0_path    = data_path+'f0_s4a_AT/';
     f0_contour = data_path+'f0_contour_dct_AT/';
     file_list  = data_path+'file_id_list.scp'
     stats_file = data_path+'mean_stats'
@@ -90,7 +98,7 @@ if __name__ == "__main__":
         print fname
     
         labfile = HTK_labels+'/'+fname+'.lab'
-        in_str  = f0_path   +'/'+fname+'.lf0'
+        in_str  = f0_path   +'/'+fname+'.f0'
     
         ###### read input f0 file #######
 
@@ -136,8 +144,7 @@ if __name__ == "__main__":
             no_of_frames = len(frame_contour);
 
             min_f0=0;max_f0=0;mean_f0=0;var_f0=0;
-            frame_mxfit = np.ndarray((10,),int)
-            frame_mxfit.fill(0)
+            frame_mxfit = zeros(dim,1)
         
             if(no_of_frames>3):
                 min_f0 = np.min(frame_contour);
@@ -178,13 +185,15 @@ if __name__ == "__main__":
             print 'silence count in this file is greater than 2: '+fname
 
         flens.append((file_len-sil_count)*14)
-        
-        #break;
+
+        ### uncomment below line while you are running for first time
+        #break; ### breaks after processing one file - to check errors
 
     ip1.close()
 
     ##### normalize the data #####
 
+    print 'Normalizing the data....'
     if(normalization=="MVN"):
         norm_data = MVN_normalize(data_mustd,stats_file)
     else:
@@ -192,6 +201,7 @@ if __name__ == "__main__":
 
     ##### write features into files #####
 
+    print 'Writing features into output files...'
     ip1 = open(file_list,'r')
     count=0;idx=0;flength=0;
     for k in ip1.readlines():
@@ -205,8 +215,7 @@ if __name__ == "__main__":
             idx=idx+1
         op1.close();
         count=count+1
-        #break;
+        ### uncomment below line while you are running for first time
+        #break; ### breaks after processing one file - to check errors
 
-    ip1.close()
-
-        
+    ip1.close()       
