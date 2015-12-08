@@ -1,0 +1,12 @@
+#############################
+######### README ############
+#############################
+
+This code setup is for running prosody models in a Text-To-Speech system.
+
+
+############################
+######## How To Run ########
+############################
+
+./run.sh configuration/DCT-model.cfg

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/repo/inf/dnn_tts/!svn/ver/183/io_funcs
+END
+binary_io.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repo/inf/dnn_tts/!svn/ver/183/io_funcs/binary_io.py
+END
+htk_io.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/repo/inf/dnn_tts/!svn/ver/43/io_funcs/htk_io.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/repo/inf/dnn_tts/!svn/ver/43/io_funcs/__init__.py
+END
